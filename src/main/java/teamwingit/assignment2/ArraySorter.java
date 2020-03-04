@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class ArraySorter<T> implements IArraySorter<T> {
+public class ArraySorter<T extends Comparable<T>> implements IArraySorter<T> {
 
     private T[] items;
     private int size;
@@ -42,6 +42,27 @@ public class ArraySorter<T> implements IArraySorter<T> {
 
     @Override
     public void sort(Comparator<T> comparator) {
+        
+        // HEAP Sort logic needs to impl comparator for asc or desc logic.
+        int n = this.items.length;
+
+        // Build heap (rearrange array) 
+        for (int i = n / 2 - 1; i >= 0; i--) {
+            heapify(this.items, n, i);
+        }
+
+        // One by one extract an element from heap
+        for (int i = n - 1; i >= 0; i--) {
+            // Move current root to end 
+            T temp = this.items[0];
+            this.items[0] = this.items[i];
+            this.items[i] = temp;
+
+            // call max heapify on the reduced heap 
+            heapify(this.items, i, 0);
+        }
+
+        // OLD comparator logic,
         Arrays.sort(this.items, comparator);
         System.out.println(this.items);
     }
@@ -61,51 +82,33 @@ public class ArraySorter<T> implements IArraySorter<T> {
         return "ArraySorter{" + "items=" + items + ", size=" + size + '}';
     }
 
+    
+    
     // To heapify a subtree rooted with node i which is 
     // an index in arr[]. n is size of heap 
-    private void heapify(int arr[], int n, int i) {
+    private void heapify(T[] arr, int n, int i) {
         int largest = i; // Initialize largest as root 
         int l = 2 * i + 1; // left = 2*i + 1 
         int r = 2 * i + 2; // right = 2*i + 2 
 
         // If left child is larger than root 
-        if (l < n && arr[l] > arr[largest]) {
+        if (l < n && arr[l].compareTo(arr[largest]) > 0) {
             largest = l;
         }
 
         // If right child is larger than largest so far 
-        if (r < n && arr[r] > arr[largest]) {
+        if (r < n && arr[r].compareTo(arr[largest]) > 0) {
             largest = r;
         }
 
         // If largest is not root 
         if (largest != i) {
-            int swap = arr[i];
+            T swap = arr[i];
             arr[i] = arr[largest];
             arr[largest] = swap;
 
             // Recursively heapify the affected sub-tree 
             heapify(arr, n, largest);
-        }
-    }
-
-    public void sort(int arr[]) {
-        int n = arr.length;
-
-        // Build heap (rearrange array) 
-        for (int i = n / 2 - 1; i >= 0; i--) {
-            heapify(arr, n, i);
-        }
-
-        // One by one extract an element from heap 
-        for (int i = n - 1; i >= 0; i--) {
-            // Move current root to end 
-            int temp = arr[0];
-            arr[0] = arr[i];
-            arr[i] = temp;
-
-            // call max heapify on the reduced heap 
-            heapify(arr, i, 0);
         }
     }
 
