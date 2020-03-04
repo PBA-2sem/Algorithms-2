@@ -3,7 +3,7 @@ package teamwingit.assignment2;
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class ArraySorter<T extends Comparable> implements IArraySorter<T> {
+public class ArraySorter<T extends Comparable<T>> implements IArraySorter<T> {
 
     private T[] items;
 
@@ -62,7 +62,7 @@ public class ArraySorter<T extends Comparable> implements IArraySorter<T> {
     }
 
     public void resize(int direction) {
-        T[] newArray = (T[]) new Object[this.items.length + direction];
+        T[] newArray = (T[]) new Comparable[this.items.length + direction];
         for (int i = 0; i < this.items.length; i++) {
             if (this.items[i] != null) {
                 newArray[i] = this.items[i];
@@ -105,5 +105,5 @@ public class ArraySorter<T extends Comparable> implements IArraySorter<T> {
             heapify(arr, n, largest);
         }
     }
-
+    
 }

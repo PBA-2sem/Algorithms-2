@@ -7,7 +7,6 @@ package teamwingit.assignment2;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.BeforeClass;
 
 /**
  *
@@ -28,7 +27,7 @@ public class ArraySorterTest {
     public void testEnqueue() {
         System.out.println("enqueue");
         Integer item = 30;
-        ArraySorter<Integer> instance = new ArraySorter(this.arr);
+        ArraySorter instance = new ArraySorter(this.arr);
         instance.enqueue(item);
         // TODO review the generated test code and remove the default call to fail.
         System.out.println(instance.toString());
@@ -78,7 +77,7 @@ public class ArraySorterTest {
     @Test
     public void testSort() {
         System.out.println("sort");
-        ArraySorter<Integer> instance = new ArraySorter(this.arr);
+        ArraySorter instance = new ArraySorter(this.arr);
         instance.sort(null);
         System.out.println(instance.toString());
         // TODO review the generated test code and remove the default call to fail.
