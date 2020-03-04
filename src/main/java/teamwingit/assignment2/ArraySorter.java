@@ -10,21 +10,19 @@ public class ArraySorter<T extends Comparable<T>> implements IArraySorter<T> {
     private int size;
 
     public ArraySorter(T[] items, int size) {
-        this.items = items;
+        this.items = (T[])new Object[200];
         this.size = size;
     }
 
     @Override
     public void enqueue(T item) {
-        resize(1);
-        this.items[this.items.length - 1] = item;
+//        items[size-1]
     }
 
     @Override
     public T dequeue() {
         T item = this.items[0];
         this.items[0] = null;
-        resize(-1);
         return item;
     }
 
@@ -42,9 +40,9 @@ public class ArraySorter<T extends Comparable<T>> implements IArraySorter<T> {
 
     @Override
     public void sort(Comparator<T> comparator) {
-        
+
         // HEAP Sort logic needs to impl comparator for asc or desc logic.
-        int n = this.items.length;
+        int n = this.size;
 
         // Build heap (rearrange array) 
         for (int i = n / 2 - 1; i >= 0; i--) {
@@ -61,29 +59,17 @@ public class ArraySorter<T extends Comparable<T>> implements IArraySorter<T> {
             // call max heapify on the reduced heap 
             heapify(this.items, i, 0);
         }
-
-        // OLD comparator logic,
-        Arrays.sort(this.items, comparator);
-        System.out.println(this.items);
-    }
-
-    public void resize(int direction) {
-        T[] newArray = (T[]) new Object[this.items.length + direction];
-        for (int i = 0; i < this.items.length; i++) {
-            if (this.items[i] != null) {
-                newArray[i] = this.items[i];
-            }
-        }
-        this.items = newArray;
     }
 
     @Override
     public String toString() {
-        return "ArraySorter{" + "items=" + items + ", size=" + size + '}';
+        String s = "";
+        for (T item : items) {
+            s += item.toString() + "\n";
+        }
+        return s;
     }
 
-    
-    
     // To heapify a subtree rooted with node i which is 
     // an index in arr[]. n is size of heap 
     private void heapify(T[] arr, int n, int i) {
@@ -95,12 +81,10 @@ public class ArraySorter<T extends Comparable<T>> implements IArraySorter<T> {
         if (l < n && arr[l].compareTo(arr[largest]) > 0) {
             largest = l;
         }
-
         // If right child is larger than largest so far 
         if (r < n && arr[r].compareTo(arr[largest]) > 0) {
             largest = r;
         }
-
         // If largest is not root 
         if (largest != i) {
             T swap = arr[i];
