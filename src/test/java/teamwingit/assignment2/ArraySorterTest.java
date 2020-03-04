@@ -29,6 +29,7 @@ public class ArraySorterTest {
         Integer item = 30;
         ArraySorter instance = new ArraySorter(this.arr);
         instance.enqueue(item);
+        assertTrue(instance.getItems()[5].equals(30));
         // TODO review the generated test code and remove the default call to fail.
         System.out.println(instance.toString());
     }
@@ -36,49 +37,46 @@ public class ArraySorterTest {
     /**
      * Test of dequeue method, of class ArraySorter.
      */
-//    @Test
+    @Test
     public void testDequeue() {
         System.out.println("dequeue");
-        ArraySorter instance = null;
-        Object expResult = null;
-        Object result = instance.dequeue();
-        assertEquals(expResult, result);
+        ArraySorter instance = new ArraySorter(this.arr);
+        Integer result = (Integer) instance.dequeue();
+        assertTrue(10 == result);
+        assertTrue(instance.getItems().length == 9);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
      * Test of sortAscending method, of class ArraySorter.
      */
-//    @Test
+    @Test
     public void testSortAscending() {
         System.out.println("sortAscending");
-        ArraySorter instance = null;
+        ArraySorter instance = new ArraySorter(this.arr);
         instance.sortAscending();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(isSortedAscending(instance.getItems()));
     }
 
     /**
      * Test of sortDescending method, of class ArraySorter.
      */
-//    @Test
+    @Test
     public void testSortDescending() {
         System.out.println("sortDescending");
-        ArraySorter instance = null;
+        ArraySorter instance = new ArraySorter(this.arr);
         instance.sortDescending();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(isSortedDescending(instance.getItems()));
     }
 
     /**
      * Test of sort method, of class ArraySorter.
      */
-    @Test
+    //@Test
     public void testSort() {
         System.out.println("sort");
         ArraySorter instance = new ArraySorter(this.arr);
-        instance.sort(null);
+        instance.sortAscending();
         System.out.println(instance.toString());
         // TODO review the generated test code and remove the default call to fail.
 //        fail("The test case is a prototype.");
@@ -98,4 +96,22 @@ public class ArraySorterTest {
         fail("The test case is a prototype.");
     }
 
+    private boolean isSortedAscending(Comparable[] array) {
+        for (int i = 0; i < array.length - 1; ++i) {
+            if (array[i].compareTo(array[i + 1]) > 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    private boolean isSortedDescending(Comparable[] array) {
+        for (int i = 0; i < array.length - 1; ++i) {
+            if (array[i].compareTo(array[i + 1]) < 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
 }
