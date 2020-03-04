@@ -1,28 +1,29 @@
 package teamwingit.assignment2;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 
-public class ArraySorter<T extends Comparable<T>> implements IArraySorter<T> {
+public class ArraySorter<T extends Comparable> implements IArraySorter<T> {
 
     private T[] items;
-    private int size;
 
-    public ArraySorter(T[] items, int size) {
-        this.items = (T[])new Object[200];
-        this.size = size;
+    public ArraySorter(T[] items) {
+        this.items = items;
     }
 
     @Override
     public void enqueue(T item) {
-//        items[size-1]
+        resize(1);
+        this.items[items.length - 1] = item;
+        sort(null);
     }
 
     @Override
     public T dequeue() {
         T item = this.items[0];
         this.items[0] = null;
+        resize(-1);
+        sort(null);
         return item;
     }
 
@@ -34,15 +35,14 @@ public class ArraySorter<T extends Comparable<T>> implements IArraySorter<T> {
 
     @Override
     public void sortDescending() {
-        Arrays.sort(this.items, Collections.reverseOrder());
-        System.out.println(this.items);
+        //sort()
     }
 
     @Override
     public void sort(Comparator<T> comparator) {
 
         // HEAP Sort logic needs to impl comparator for asc or desc logic.
-        int n = this.size;
+        int n = this.items.length;
 
         // Build heap (rearrange array) 
         for (int i = n / 2 - 1; i >= 0; i--) {
@@ -59,6 +59,16 @@ public class ArraySorter<T extends Comparable<T>> implements IArraySorter<T> {
             // call max heapify on the reduced heap 
             heapify(this.items, i, 0);
         }
+    }
+
+    public void resize(int direction) {
+        T[] newArray = (T[]) new Object[this.items.length + direction];
+        for (int i = 0; i < this.items.length; i++) {
+            if (this.items[i] != null) {
+                newArray[i] = this.items[i];
+            }
+        }
+        this.items = newArray;
     }
 
     @Override

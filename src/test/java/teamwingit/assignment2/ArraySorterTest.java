@@ -18,20 +18,20 @@ public class ArraySorterTest {
     Integer[] arr;
 
     public ArraySorterTest() {
-        this.arr = new Integer[]{10, 14, 19, 26, 31, 42, 27, 44, 35, 33, null, null, null};
+        this.arr = new Integer[]{10, 14, 19, 26, 31, 42, 27, 44, 35, 33};
     }
 
     /**
      * Test of enqueue method, of class ArraySorter.
      */
-//    @Test
+    @Test
     public void testEnqueue() {
         System.out.println("enqueue");
-        Object item = null;
-        ArraySorter instance = null;
-//        instance.enqueue(item);
+        Integer item = 30;
+        ArraySorter<Integer> instance = new ArraySorter(this.arr);
+        instance.enqueue(item);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println(instance.toString());
     }
 
     /**
@@ -78,7 +78,7 @@ public class ArraySorterTest {
     @Test
     public void testSort() {
         System.out.println("sort");
-        ArraySorter instance = new ArraySorter(this.arr, this.arr.length - 1);
+        ArraySorter<Integer> instance = new ArraySorter(this.arr);
         instance.sort(null);
         System.out.println(instance.toString());
         // TODO review the generated test code and remove the default call to fail.
