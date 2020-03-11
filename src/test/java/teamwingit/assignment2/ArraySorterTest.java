@@ -28,7 +28,9 @@ public class ArraySorterTest {
         System.out.println("enqueue");
         Integer item = 30;
         ArraySorter instance = new ArraySorter(this.arr);
+        System.out.println("LENGTH:" + instance.getItems().length);
         instance.enqueue(item);
+        System.out.println("LENGTH:" + instance.getItems().length);
         assertTrue(instance.getItems()[5].equals(30));
         // TODO review the generated test code and remove the default call to fail.
         System.out.println(instance.toString());

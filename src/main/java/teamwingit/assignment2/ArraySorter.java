@@ -13,7 +13,7 @@ public class ArraySorter<T extends Comparable<T>> implements IArraySorter<T> {
 
     @Override
     public void enqueue(T item) {
-        expand();
+        resize(1);
         this.items[items.length - 1] = item;
         if (sortedAscending)
             sortAscending();
@@ -25,7 +25,7 @@ public class ArraySorter<T extends Comparable<T>> implements IArraySorter<T> {
     public T dequeue() {
         T item = this.items[0];
         this.items[0] = null;
-        shrink();
+        resize(-1);
         if (sortedAscending)
             sortAscending();
         else 
@@ -71,28 +71,11 @@ public class ArraySorter<T extends Comparable<T>> implements IArraySorter<T> {
     public void resize(int direction) {
         T[] newArray = (T[]) new Comparable[this.items.length + direction];
         
-        for (int i = 1, j = 0; i < this.items.length; i++, j++) {
-            if (this.items[i] != null) {
-                newArray[j] = this.items[i];
-            }
-        }
-        this.items = newArray;
-    }
-    public void expand() {
-        T[] newArray = (T[]) new Comparable[this.items.length + 1];
+        int iterator = direction < 0 ? 1 : 0;
         
-        for (int i = 0; i < this.items.length; i++) {
-                newArray[i] = this.items[i];
-        }
-        this.items = newArray;
-    }
-    
-    public void shrink() {
-        T[] newArray = (T[]) new Comparable[this.items.length - 1];
-        
-        for (int i = 1; i < this.items.length; i++) {
+        for (int i = iterator; i < this.items.length; i++) {
             if (this.items[i] != null) {
-                newArray[i-1] = this.items[i];
+                newArray[i - iterator] = this.items[i];
             }
         }
         this.items = newArray;
